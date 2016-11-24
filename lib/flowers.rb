@@ -1,6 +1,6 @@
 # Manages group of flowers
 class Flowers
-  CODES = ['R12', 'L09', 'T58']
+  CODES = %w(R12 L09 T58).freeze
 
   attr_reader :flowers
 

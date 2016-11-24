@@ -9,7 +9,7 @@ class Validator
   end
 
   def valid?(order)
-    message(order).size == 0
+    message(order).empty?
   end
 
   def message(message)
@@ -25,22 +25,17 @@ class Validator
   private
 
   def check_syntax(message)
-    unless message.match(/^\d+\s+\w+\n?\z/)
-      return 'Please follow format: #{quantity} #{code}'
-    end
+    'Please follow format: #{quantity} #{code}' unless message =~
+                                                       /^\d+\s+\w+\n?\z/
   end
 
   def check_semantics(message)
     order_quantity, order_code = message.split(/\s+/)
     message = []
 
-    unless order_quantity.to_i > 0
-      message << 'Please order 1 or more flowers'
-    end
-
-    unless codes.include? order_code
-      message << "Please use one of the following order codes: #{codes}"
-    end
+    message << 'Please order 1 or more flowers' unless order_quantity.to_i > 0
+    message << "Please use one of the following order codes: #{codes}" unless
+                                                     codes.include? order_code
 
     message.join(' ')
   end
