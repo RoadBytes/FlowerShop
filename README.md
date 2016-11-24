@@ -114,7 +114,18 @@ here is an approximate order
 
 # DESIGN
 
-TODO: coming soon.
+* Initial classes considered are in `design_first_draft.md`
+* Finding the smallest bundle subset for an order involved 'backtracking' and
+  seeing if a combination of bundle sizes would sum to the order quantity
+
+God bless 'S. Saurabh' for the insight with this video
+
+> This video lecture is produced by S. Saurabh.
+> https://www.youtube.com/watch?v=WRT8kmFOQTw
+
+* The spec didn't provide what to do when an order cannot be met exactly with
+  the provided flower bundles, so I just made an approximation (slightly higher)
+  with the provided bundle sizes
 
 ---
 
