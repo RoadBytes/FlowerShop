@@ -1,4 +1,4 @@
-# Contains the business logic for flower bundles and prices
+# Manages group of flowers
 class Flowers
   attr_reader :flowers
   def initialize
@@ -14,9 +14,7 @@ class Flowers
   end
 
   def add(name, code, bundle_attributes)
-    flowers[code] = { name: name,
-                      code: code,
-                      bundle_attributes: bundle_attributes }
+    flowers[code] = Flower.new(name, code, bundle_attributes)
   end
 
   def size

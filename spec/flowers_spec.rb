@@ -1,4 +1,5 @@
 require_relative '../lib/flowers.rb'
+require_relative '../lib/flower.rb'
 
 describe Flowers do
   describe '#add(name, code, bundle_attributes)' do
@@ -15,9 +16,7 @@ describe Flowers do
     it 'returns the flower with appropriate code' do
       flowers = Flowers.new
       flowers.add('Rose', 'R12', 5 => 6.99, 10 => 12.99)
-      expected_flower = { name: 'Rose',
-                          code: 'R12',
-                          bundle_attributes: { 5 => 6.99, 10 => 12.99 } }
+      expected_flower = Flower.new('Rose', 'R12', 5 => 6.99, 10 => 12.99)
 
       flower = flowers.find('R12')
 
@@ -39,9 +38,9 @@ describe Flowers do
       lilies = flowers.find('L09')
       tulips = flowers.find('T58')
 
-      expect(roses[:name]).to eq 'Roses'
-      expect(lilies[:name]).to eq 'Lilies'
-      expect(tulips[:name]).to eq 'Tulips'
+      expect(roses.name).to eq 'Roses'
+      expect(lilies.name).to eq 'Lilies'
+      expect(tulips.name).to eq 'Tulips'
     end
   end
 end
