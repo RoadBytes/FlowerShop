@@ -10,7 +10,15 @@ class Response
   end
 
   def evaluate_order
-    output = "#{order} #{flower.code} $#{total}\n"
+    output = ''
+    if order == bundles_total
+      output += "#{order} #{flower.code} $#{total}\n"
+    else
+      output += "#{order} orders are not possible with bundles\n"
+      output += "here is an approximate order\n"
+      output += "#{bundles_total} #{flower.code} $#{total}\n"
+    end
+
     bundle_break_down.each do |bundle_info|
       count = bundle_info[:count]
       size  = bundle_info[:bundle_size]
@@ -21,6 +29,10 @@ class Response
   end
 
   private
+
+  def bundles_total
+    bundles_for_order.inject(:+).to_i
+  end
 
   def bundle_break_down
     @bundle_break_down || calculate_bundle_break_down
