@@ -1,16 +1,16 @@
 # Contains the business logic for flower bundles and orders
 class Flower
-  attr_reader :name, :code, :batch_attributes
-  def initialize(name, code, batch_attributes)
-    @name             = name
-    @code             = code
-    @batch_attributes = batch_attributes
+  attr_reader :name, :code, :bundle_attributes
+  def initialize(name, code, bundle_attributes)
+    @name              = name
+    @code              = code
+    @bundle_attributes = bundle_attributes
   end
 
   def ==(other)
     name == other.name &&
       code == other.code &&
-      batch_attributes == other.batch_attributes
+      bundle_attributes == other.bundle_attributes
   end
 
   def bundles_for_order(order_quantity)
@@ -26,12 +26,12 @@ class Flower
 
   def bundle_approximate_order(order_quantity)
     approximate_order = smaller_order(order_quantity)
-    smallest_batch    = bundle_sizes.first
+    smallest_bundle   = bundle_sizes.first
 
-    left_over_orders  = order_quantity - approximate_order.inject(:+)
+    left_over_orders = order_quantity - approximate_order.inject(:+)
     until left_over_orders < 0
-      approximate_order << smallest_batch
-      left_over_orders -= smallest_batch
+      approximate_order << smallest_bundle
+      left_over_orders -= smallest_bundle
     end
 
     approximate_order.sort
@@ -66,6 +66,6 @@ class Flower
   end
 
   def bundle_sizes
-    batch_attributes.keys.sort
+    bundle_attributes.keys.sort
   end
 end

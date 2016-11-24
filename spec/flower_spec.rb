@@ -8,12 +8,12 @@ describe Flower do
 
       expect(flower.name).to eq 'Rose'
       expect(flower.code).to eq 'R12'
-      expect(flower.batch_attributes).to eq(5 => 6.99, 10 => 12.99)
+      expect(flower.bundle_attributes).to eq(5 => 6.99, 10 => 12.99)
     end
   end
 
   describe '#==' do
-    it 'is equal only when name code and batch attributes are equal' do
+    it 'is equal only when name code and bundle attributes are equal' do
       flower    = Flower.new('Rose', 'R12', 5 => 6.99, 10 => 12.99)
       same      = Flower.new('Rose', 'R12', 5 => 6.99, 10 => 12.99)
       different = Flower.new('Tulip', 'T12', 5 => 6.99, 10 => 12.99)
@@ -49,6 +49,17 @@ describe Flower do
     end
   end
 
+  describe '#budle_approximate_order(order_quantity)' do
+    it 'returns an approximation order if >= order_quantity' do
+      order_quantity = 16
+      roses          = Flower.new('Rose', 'R12', 5 => 6.99, 10 => 12.99)
+
+      subset = roses.bundle_approximate_order(order_quantity)
+
+      expect(subset).to eq [5, 5, 10]
+    end
+  end
+
   describe '#bundle_subset_order(order_quantity)' do
     it 'returns a subset order if one exists' do
       order_quantity = 15
@@ -66,17 +77,6 @@ describe Flower do
       subset = roses.bundle_subset_order(order_quantity)
 
       expect(subset).to eq nil
-    end
-  end
-
-  describe '#budle_approximate_order(order_quantity)' do
-    it 'returns an approximation order if >= order_quantity' do
-      order_quantity = 16
-      roses          = Flower.new('Rose', 'R12', 5 => 6.99, 10 => 12.99)
-
-      subset = roses.bundle_approximate_order(order_quantity)
-
-      expect(subset).to eq [5, 5, 10]
     end
   end
 end
