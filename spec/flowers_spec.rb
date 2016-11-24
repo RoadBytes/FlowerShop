@@ -26,7 +26,7 @@ describe Flowers do
     it 'raises error if code not found' do
       flowers = Flowers.new
 
-      expect { flowers.find('R12') }.to raise_error 'Flower not found'
+      expect { flowers.find('R12') }.to raise_error 'Flower R12 not found'
     end
   end
 

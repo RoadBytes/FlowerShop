@@ -23,7 +23,7 @@ class Flowers
 
   def find(code)
     flower = flowers[code]
-    raise ArgumentError, 'Flower not found' unless flower
+    raise ArgumentError, "Flower #{code} not found" unless flower
     flower
   end
 end
