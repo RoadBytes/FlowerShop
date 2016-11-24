@@ -8,7 +8,7 @@ class Validator
     @codes = Flowers::CODES
   end
 
-  def check(message)
+  def message(message)
     check_syntax(message) ||
       check_semantics(message)
   end

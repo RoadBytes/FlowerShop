@@ -2,12 +2,12 @@ require_relative '../lib/validator.rb'
 require_relative '../lib/flowers.rb'
 
 describe Validator do
-  describe '#check(order_line)' do
+  describe '#message(order_line)' do
     it 'returns a syntax message if format is off' do
       order_line = ''
       validator  = Validator.new
 
-      message = validator.check(order_line)
+      message = validator.message(order_line)
 
       expect(message).to include 'Please follow format: #{quantity} #{code}'
     end
@@ -16,7 +16,7 @@ describe Validator do
       order_line = '0 R12'
       validator  = Validator.new
 
-      message = validator.check(order_line)
+      message = validator.message(order_line)
 
       expect(message).to include 'Please order 1 or more flowers'
     end
@@ -26,7 +26,7 @@ describe Validator do
       validator  = Validator.new
       codes      = validator.codes.to_s
 
-      message = validator.check(order_line)
+      message = validator.message(order_line)
 
       expect(message).to include codes
     end
