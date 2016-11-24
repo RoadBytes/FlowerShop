@@ -13,7 +13,7 @@ class Flower
       batch_attributes == other.batch_attributes
   end
 
-  def evaluate_order(order_quantity)
+  def bundles_for_order(order_quantity)
     bundle_subset_order(order_quantity) ||
       bundle_approximate_order(order_quantity)
   end

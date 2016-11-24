@@ -23,11 +23,11 @@ describe Flower do
     end
   end
 
-  describe '#evaluate_order(order_quantity)' do
+  describe '#bundles_for_order(order_quantity)' do
     it 'returns [10] for Roses order of 10' do
       roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
 
-      order = roses.evaluate_order(10)
+      order = roses.bundles_for_order(10)
 
       expect(order).to eq [10]
     end
@@ -35,7 +35,7 @@ describe Flower do
     it 'returns [5, 10] for Roses order of 14' do
       roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
 
-      order = roses.evaluate_order(14)
+      order = roses.bundles_for_order(14)
 
       expect(order).to eq [5, 10]
     end
@@ -43,7 +43,7 @@ describe Flower do
     it 'returns [3, 5, 5] for Tulips order of 13' do
       tulips = Flower.new('Tulips', 'T58', 3 => 5.95, 5 => 9.95, 9 => 16.99)
 
-      order = tulips.evaluate_order(13)
+      order = tulips.bundles_for_order(13)
 
       expect(order).to eq [3, 5, 5]
     end
