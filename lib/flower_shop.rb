@@ -20,7 +20,7 @@ class FlowerShop
       display_instructions
       display_order(orders)
 
-      input = gets.chomp.upcase
+      input = STDIN.gets.chomp.upcase
       break if input == 'SUBMIT'
 
       if validator.valid?(input)
@@ -31,7 +31,7 @@ class FlowerShop
       end
     end
 
-    input = orders.join("\n") 
+    input = orders.join("\n")
 
     output_results(input)
   end
@@ -68,5 +68,3 @@ class FlowerShop
     puts
   end
 end
-
-FlowerShop.new.evaluate_order
