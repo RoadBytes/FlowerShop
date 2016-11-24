@@ -27,7 +27,7 @@ class FlowerShop
         input = validator.format(input)
         orders << input
       else
-        puts validator.message(input)
+        @errors = validator.message(input)
       end
     end
 
@@ -48,10 +48,15 @@ class FlowerShop
     orders.each do |order|
       puts order
     end
+    if @errors
+      puts @errors
+      @errors = nil
+    end
     puts
   end
 
   def display_instructions
+    system('clear')
     puts 'Orders are in the format: #{Quantity} #{Flower Code}'
     puts "ex: '10 R12'\n\n"
     puts 'Add orders and your order will be displayed'
