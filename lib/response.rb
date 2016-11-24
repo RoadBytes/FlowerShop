@@ -15,9 +15,9 @@ class Response
       count = bundle_info[:count]
       size  = bundle_info[:bundle_size]
       price = bundle_info[:bundle_price]
-      output += "#{count} x #{size} $#{price}\n"
+      output += "  #{count} x #{size} $#{price}\n"
     end
-    output
+    output + "\n\n"
   end
 
   private

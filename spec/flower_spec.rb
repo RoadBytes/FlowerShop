@@ -1,5 +1,6 @@
 require_relative '../lib/flower.rb'
 require_relative '../lib/subset_on_target.rb'
+require_relative '../lib/response.rb'
 
 describe Flower do
   describe '#new(name, code, bundles)' do
@@ -77,6 +78,21 @@ describe Flower do
       subset = roses.bundle_subset_order(order_quantity)
 
       expect(subset).to eq nil
+    end
+  end
+
+  describe '#evaluate_order(order_quantity)' do
+    it 'sends self and order to Response' do
+      bundle_attributes = { 3 => 5.95, 5 => 9.95, 9 => 16.99 }
+      tulips = Flower.new('Tulips', 'T58', bundle_attributes)
+      response = instance_double('Response')
+      allow(response).to receive(:evaluate_order)
+      allow(Response).to receive(:new) { response }
+
+      tulips.evaluate_order(10)
+
+      expect(Response).to have_received(:new).with(10, tulips)
+      expect(response).to have_received(:evaluate_order)
     end
   end
 end
