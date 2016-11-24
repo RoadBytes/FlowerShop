@@ -12,6 +12,42 @@ describe Flowers do
     end
   end
 
+  describe '#evaluate_order(orders)' do
+    it 'sends orders to correct flower' do
+      orders = "12 R12\n15 L09"
+      roses  = instance_double('Flower')
+      lilies = instance_double('Flower')
+      allow(Flower).to receive(:new).with('Rose', 'R12',
+                                          5 => 6.99, 10 => 12.99) { roses }
+      allow(Flower).to receive(:new).with('Lilies', 'L09',
+                                          5 => 6.99, 10 => 12.99) { lilies }
+      flowers = Flowers.new
+      flowers.add('Rose', 'R12', 5 => 6.99, 10 => 12.99)
+      flowers.add('Lilies', 'L09', 5 => 6.99, 10 => 12.99)
+      allow(roses).to receive(:evaluate_order)
+      allow(lilies).to receive(:evaluate_order)
+
+      flowers.evaluate_order(orders)
+
+      expect(roses).to have_received(:evaluate_order).with(12)
+      expect(lilies).to have_received(:evaluate_order).with(15)
+    end
+  end
+
+  describe '#evaluate_order_line(order_line)' do
+    it 'sends order to correct flower' do
+      roses = instance_double('Flower')
+      allow(Flower).to receive(:new) { roses }
+      flowers = Flowers.new
+      flowers.add('Rose', 'R12', 5 => 6.99, 10 => 12.99)
+      allow(roses).to receive(:evaluate_order).with(10)
+
+      flowers.evaluate_order('10 R12')
+
+      expect(roses).to have_received(:evaluate_order).with(10)
+    end
+  end
+
   describe '#find(code)' do
     it 'returns the flower with appropriate code' do
       flowers = Flowers.new

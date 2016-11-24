@@ -17,13 +17,28 @@ class Flowers
     flowers[code] = Flower.new(name, code, bundle_attributes)
   end
 
-  def size
-    flowers.size
+  def evaluate_order(orders)
+    orders.split("\n").map do |order_line|
+      evaluate_order_line(order_line)
+    end
+  end
+
+  def evaluate_order_line(order_line)
+    order_quantity, code = order_line.split(/\s+/)
+    order_quantity = order_quantity.to_i
+
+    flower = find(code)
+
+    flower.evaluate_order(order_quantity)
   end
 
   def find(code)
     flower = flowers[code]
     raise ArgumentError, "Flower #{code} not found" unless flower
     flower
+  end
+
+  def size
+    flowers.size
   end
 end
