@@ -42,6 +42,11 @@ class Flower
     response.evaluate_order
   end
 
+  def to_s
+    "#{name} have code: #{code}\n" \
+    "Current Bundles:   #{bundle_attributes}"
+  end
+
   private
 
   def bundle_sizes

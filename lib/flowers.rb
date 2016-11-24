@@ -1,6 +1,9 @@
 # Manages group of flowers
 class Flowers
+  CODES = ['R12', 'L09', 'T58']
+
   attr_reader :flowers
+
   def initialize
     @flowers = {}
   end
@@ -11,6 +14,12 @@ class Flowers
     domain_flowers.add('Lilies', 'L09', 9 => 24.95, 6 => 16.95)
     domain_flowers.add('Tulips', 'T58', 3 => 5.95, 5 => 9.95, 9 => 16.99)
     domain_flowers
+  end
+
+  def display_flowers
+    flowers.map do |_code, flower|
+      flower.to_s
+    end.join("\n")
   end
 
   def add(name, code, bundle_attributes)

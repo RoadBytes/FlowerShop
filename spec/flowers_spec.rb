@@ -12,6 +12,18 @@ describe Flowers do
     end
   end
 
+  describe '#display_flowers' do
+    it 'displays flower attributes' do
+      flowers = Flowers.new
+      flowers.add('Rose', 'R12', 5 => 6.99, 10 => 12.99)
+      flower = flowers.find('R12')
+
+      output = flowers.display_flowers
+
+      expect(output).to include flower.to_s
+    end
+  end
+
   describe '#evaluate_order(orders)' do
     it 'sends orders to correct flower' do
       orders = "12 R12\n15 L09"
