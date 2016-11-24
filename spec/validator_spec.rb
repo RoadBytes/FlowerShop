@@ -32,14 +32,30 @@ describe Validator do
     end
   end
 
+  describe '#valid?(order)' do
+    it 'is true when order valid' do
+      validator = Validator.new
+      order = '12 R12'
+
+      expect(validator.valid?(order)).to eq true
+    end
+
+    it 'is false when order invalid' do
+      validator = Validator.new
+      order = '0 R12'
+
+      expect(validator.valid?(order)).to eq false
+    end
+  end
+
   describe '#format(order_line)' do
     it 'removes excess white space and upcases' do
       order_line = '1         r12'
       validator  = Validator.new
 
-      message = validator.format(order_line)
+      formated = validator.format(order_line)
 
-      expect(message).to eq '1 R12'
+      expect(formated).to eq '1 R12'
     end
   end
 end
