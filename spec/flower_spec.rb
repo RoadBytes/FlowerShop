@@ -25,6 +25,14 @@ describe Flower do
   end
 
   describe '#bundles_for_order(order_quantity)' do
+    it 'returns [5] for Roses order of 2' do
+      roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
+
+      order = roses.bundles_for_order(2)
+
+      expect(order).to eq [5]
+    end
+
     it 'returns [10] for Roses order of 10' do
       roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
 

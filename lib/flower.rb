@@ -17,7 +17,7 @@ class Flower
     approximate_order = smaller_order(order_quantity)
     smallest_bundle   = bundle_sizes.first
 
-    left_over_orders = order_quantity - approximate_order.inject(:+)
+    left_over_orders = order_quantity - approximate_order.inject(:+).to_i
     until left_over_orders < 0
       approximate_order << smallest_bundle
       left_over_orders -= smallest_bundle
