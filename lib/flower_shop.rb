@@ -20,15 +20,8 @@ class FlowerShop
       display_instructions
       display_order(orders)
 
-      input = STDIN.gets.chomp.upcase
+      input = add_order(orders)
       break if input == 'SUBMIT'
-
-      if validator.valid?(input)
-        input = validator.format(input)
-        orders << input
-      else
-        @errors = validator.message(input)
-      end
     end
 
     input = orders.join("\n")
@@ -37,6 +30,18 @@ class FlowerShop
   end
 
   private
+
+  def add_order(orders)
+    input = STDIN.gets.chomp.upcase
+    return 'SUBMIT' if input == 'SUBMIT'
+
+    if validator.valid?(input)
+      input = validator.format(input)
+      orders << input
+    else
+      @errors = validator.message(input)
+    end
+  end
 
   def welcome_user
     system('clear')

@@ -10,14 +10,29 @@ class Response
   end
 
   def evaluate_order
+    output = quantity_notification
+    output += bundles_list
+    output + "\n\n"
+  end
+
+  private
+
+  def quantity_notification
     output = ''
+
     if order == bundles_total
       output += "#{order} #{flower.code} $#{total}\n"
     else
-      output += "#{order} orders are not possible with bundles\n"
-      output += "here is an approximate order\n"
-      output += "#{bundles_total} #{flower.code} $#{total}\n"
+      output += "#{order} orders are not possible with bundles\n" \
+                "here is an approximate order\n" \
+                "#{bundles_total} #{flower.code} $#{total}\n"
     end
+
+    output
+  end
+
+  def bundles_list
+    output = ''
 
     bundle_break_down.each do |bundle_info|
       count = bundle_info[:count]
@@ -25,10 +40,9 @@ class Response
       price = bundle_info[:bundle_price]
       output += "  #{count} x #{size} $#{price}\n"
     end
-    output + "\n\n"
-  end
 
-  private
+    output
+  end
 
   def bundles_total
     bundles_for_order.inject(:+).to_i
