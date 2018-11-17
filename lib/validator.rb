@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'flowers.rb'
 
 # Validates and Formats input from user
@@ -33,7 +35,8 @@ class Validator
     order_quantity, order_code = message.split(/\s+/)
     message = []
 
-    message << 'Please order 1 or more flowers' unless order_quantity.to_i > 0
+    message << 'Please order 1 or more flowers' unless order_quantity.to_i
+                                                                     .positive?
     message << "Please use one of the following order codes: #{codes}" unless
                                                      codes.include? order_code
 

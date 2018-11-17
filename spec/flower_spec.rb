@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/flower.rb'
 require_relative '../lib/subset_on_target.rb'
 require_relative '../lib/response.rb'
@@ -55,6 +57,24 @@ describe Flower do
       order = tulips.bundles_for_order(13)
 
       expect(order).to eq [3, 5, 5]
+    end
+
+    it 'returns quickly for Roses order of 10000' do
+      roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
+      thousand_bundles = [10] * 1000
+
+      order = roses.bundles_for_order(10_000)
+
+      expect(order).to eq thousand_bundles
+    end
+
+    it 'returns quickly for Roses order of 100' do
+      roses = Flower.new('Roses', 'R12', 5 => 6.99, 10 => 12.99)
+      hundred_bundles = [10] * 10
+
+      order = roses.bundles_for_order(100)
+
+      expect(order).to eq hundred_bundles
     end
   end
 

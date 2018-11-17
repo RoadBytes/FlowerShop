@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/response.rb'
 require_relative '../lib/flower.rb'
 require_relative '../lib/subset_on_target.rb'

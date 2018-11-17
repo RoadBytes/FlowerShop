@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/flower_shop.rb'
 
 describe FlowerShop do

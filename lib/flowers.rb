@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Manages group of flowers
 class Flowers
   CODES = %w(R12 L09 T58).freeze

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Contains the business logic for flower bundles and orders
 class Flower
   attr_reader :name, :code, :bundle_attributes
@@ -18,7 +20,7 @@ class Flower
     smallest_bundle   = bundle_sizes.first
 
     left_over_orders = order_quantity - approximate_order.inject(:+).to_i
-    until left_over_orders < 0
+    until left_over_orders.negative?
       approximate_order << smallest_bundle
       left_over_orders -= smallest_bundle
     end
@@ -29,7 +31,7 @@ class Flower
   def bundle_subset_order(order_quantity)
     superset = bundle_superset(order_quantity)
 
-    SubsetOnTarget.new(superset, order_quantity).last
+    SubsetOnTarget.new(superset, order_quantity).run
   end
 
   def bundles_for_order(order_quantity)
@@ -61,7 +63,7 @@ class Flower
       bundles.times { superset << bundle_size }
     end
 
-    superset.sort
+    superset.sort.reverse
   end
 
   def smaller_order(order_quantity)

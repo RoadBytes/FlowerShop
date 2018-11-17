@@ -1,63 +1,79 @@
+# frozen_string_literal: true
+
 # handles subsets that sum to target value
 class SubsetOnTarget
-  attr_reader :total_set, :target_value, :acceptable_subsets
+  attr_reader :total_set, :target_value
+  attr_accessor :matrix, :subset
 
   def initialize(total_set, target_value)
-    @total_set          = total_set
-    @target_value       = target_value
-    @acceptable_subsets = []
-    @all                = nil
+    @total_set    = total_set
+    @target_value = target_value
+    @matrix       = []
+    @subset       = []
   end
 
-  def all
-    @all ||= subset_step_k([], -1)
+  def run
+    return if total_set.size.zero?
+    create_matrix
+    fillin_matrix
+    subset_on_target
   end
 
-  def last
-    all.nil? ? nil : all.last
+  def create_matrix
+    total_set.size.times do
+      matrix << [true]
+    end
   end
 
-  def subset_step_k(subset, k_step)
-    current_sum = subset.inject(:+).to_i
+  def fillin_matrix
+    columns = target_value
+    rows = total_set.size
 
-    # add subset if subset_on_target
-    acceptable_subsets << subset if subset_on_target(current_sum)
-
-    # stop looking if termination condition in next set
-    return acceptable_subsets if termination_condition?(current_sum, k_step + 1)
-
-    # look at each next step (with next element and without)
-    subset_step_k_plus_one(subset, k_step)
-
-    acceptable_subsets
+    0.upto(rows) do |row|
+      1.upto(columns) do |column|
+        matrix[row][column] = position_above(row, column) ||
+                              position_above_and_back(row, column)
+      end
+    end
   end
 
-  def termination_condition?(current_sum, next_k_step)
-    k_step_out_of_bounds?(next_k_step) ||
-      ending_step?(current_sum, next_k_step)
+  def subset_on_target
+    determined_subset if matrix[-1][-1]
   end
 
-  def k_step_out_of_bounds?(next_k_step)
-    return true if next_k_step >= total_set.size
+  private def position_above(row, column)
+    return column == total_set[row] if (row - 1).negative?
+
+    matrix[row - 1][column]
   end
 
-  def ending_step?(current_sum, next_k_step)
-    remainder_sum = total_set[next_k_step..-1].inject(:+).to_i
-    next_element  = total_set[next_k_step]
+  private def position_above_and_back(row, column)
+    return false if (column - total_set[row]).negative?
 
-    (current_sum + next_element) > target_value ||
-      (current_sum + remainder_sum) < target_value
+    matrix[row - 1][column - total_set[row]] || false
   end
 
-  def subset_on_target(current_sum)
-    current_sum == target_value
+  private def determined_subset
+    current = { row: total_set.size - 1, column: target_value }
+
+    while current[:row].positive? && current[:column].positive?
+      add_matrix_item_to_subset_and_move_left(current)
+      move_up_and_add_matrix_item(current)
+    end
+
+    subset
   end
 
-  def subset_step_k_plus_one(subset, k_step)
-    including_subset = subset + [total_set[k_step + 1]]
-    excluding_subset = subset
+  private def add_matrix_item_to_subset_and_move_left(current)
+    return if position_above(current[:row], current[:column])
 
-    subset_step_k(including_subset, k_step + 1)
-    subset_step_k(excluding_subset, k_step + 1)
+    subset << total_set[current[:row]]
+    current[:column] -= total_set[current[:row]]
+  end
+
+  private def move_up_and_add_matrix_item(current)
+    current[:row] -= 1
+    subset << total_set[current[:row]] if current[:row].zero? &&
+                                          current[:column].positive?
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../lib/flowers.rb'
 require_relative '../lib/flower.rb'
 

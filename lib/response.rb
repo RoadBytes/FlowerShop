@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Handles output for Flower orders
 class Response
   attr_reader :order, :flower, :bundles_for_order
